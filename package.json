@@ -1,0 +1,9 @@
+{
+	"name": "meta-astar",
+	"version": "1.0",
+	"description": "A* pathfinding algorithm implementation",
+	"author": "Arturs Šefers <arthur.der.shefer@gmail.com>",
+	"main": "src/AStar.js",
+	"keywords": [ "astar", "pathfinding", "ai", "javascript", "meta2d" ],
+	"license": "MIT"
+}
