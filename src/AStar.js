@@ -10,10 +10,11 @@ function AStarNode(x, y) {
 	this.f = 0
 }
 
-function AStarOptions(walkable = 0, diagonal = false, range = 0) {
+function AStarOptions(walkable = 0, diagonal = false, range = 0, cost = null) {
 	this.walkable = walkable
 	this.diagonal = diagonal
 	this.range = range
+	this.cost = cost
 }
 
 class AStar
@@ -123,6 +124,7 @@ class AStar
 			}
 		}
 
+		output.length = 0
 		return false
 	}	
 
@@ -170,11 +172,15 @@ class AStar
 
 	tryAddNeighbor(x, y, parentNode) {
 		const node = this.getNode(x, y)
-		const gid = this.data[x + (y * this.sizeX)]
+		const id = x + (y * this.sizeX)
+		const gid = this.data[id]
 		if(node.searchIndex != this.searchIndex && (this._options.walkable & gid) === gid) {
 			node.parent = parentNode
 			node.h = this._heuristicFunc(node, this.endNode)
 			node.g = parentNode.g + this._costFunc(node, parentNode)
+			if(this._options.cost) {
+				node.g += this._options.cost[id]
+			}
 			node.f = node.g + node.h
 			node.searchIndex = this.searchIndex
 			node.depth = parentNode.depth + 1
@@ -220,7 +226,7 @@ const manhattan = (node, destNode) => {
 		   ((dy ^ (dy >> 31)) - (dy >> 31))
 }
 
-const manhattanCost = () => {
+const manhattanCost = (node, parentNode, cost) => {
 	return 1
 }
 
@@ -234,7 +240,7 @@ const euclidean = (node, destNode) => {
 		   euclideanMagicNumber * Math.min(dx, dy)
 }
 
-const euclideanCost = (node, parentNode) => {
+const euclideanCost = (node, parentNode, cost) => {
 	if(node.x !== parentNode.x && node.y !== parentNode.y) {
 		return 1.42
 	}
