@@ -1,6 +1,6 @@
 {
 	"name": "meta-astar",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A* pathfinding algorithm implementation",
 	"author": "Arturs Šefers <arthur.der.shefer@gmail.com>",
 	"main": "src/AStar.js",
